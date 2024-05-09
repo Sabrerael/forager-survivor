@@ -19,8 +19,7 @@ public class Movement : MonoBehaviour {
     }
 
     public void NormalMovement() {
-        playerRigidbody.AddForce(new Vector2(movementValues.x * movementSpeed,
-                                             movementValues.y * movementSpeed));
+        playerRigidbody.MovePosition(playerRigidbody.position + (movementValues * (movementSpeed * Time.fixedDeltaTime)));
     }
 
     public void SetMovementValues(Vector2 values) {
