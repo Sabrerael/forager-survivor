@@ -44,6 +44,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyPrefab: {fileID: 4650680336275238213, guid: 23918f87f405f894d85496d3dab224d7, type: 3}
+  spawnRadius: 10
+  minimumTimeBetweenSpawns: 1
+  maximumTimeBetweenSpawns: 2
+  waveLength: 15
+  breakLength: 10
 --- !u!1 &6817628339682527368
 GameObject:
   m_ObjectHideFlags: 0
@@ -57,6 +62,7 @@ GameObject:
   - component: {fileID: 6817628339682527375}
   - component: {fileID: 6817628339682527372}
   - component: {fileID: 6817628339682527373}
+  - component: {fileID: 8965878359326113811}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -155,7 +161,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 265eb8429cd02fd4f8df970b25ba39b2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movementSpeed: 6
+  movementSpeed: 4.5
+--- !u!114 &8965878359326113811
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6817628339682527368}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d84ba736179bb5d4aac3456a042718c0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  projectilePrefab: {fileID: 4184752899073056072, guid: d1d0123434707f54daca0a6f0ea78f9b, type: 3}
+  projectileSpeed: 15
+  projectileLifetime: 5
+  firingRate: 0.5
+  isFiring: 0
 --- !u!1 &6817628341370782978
 GameObject:
   m_ObjectHideFlags: 0
