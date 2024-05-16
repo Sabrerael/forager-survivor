@@ -26,7 +26,6 @@ public class Gun : MonoBehaviour {
 
     private IEnumerator FireContiniously() {
         while(true) {
-            Debug.Log(getMousePosition());
             GameObject instance = Instantiate(projectilePrefab, transform.position, Quaternion.identity);
             Rigidbody2D rb = instance.GetComponent<Rigidbody2D>();
             if (rb != null) {
