@@ -1,7 +1,9 @@
+using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+// TODO: Can bypass the firingRate by clicking rapidly, will need to fix
 public class Gun : MonoBehaviour {
     [SerializeField] GameObject projectilePrefab;
     [SerializeField] float projectileSpeed = 10f;
@@ -13,6 +15,7 @@ public class Gun : MonoBehaviour {
 
     private void Update() {
         Fire();
+        RotatePlayer();
     }
 
     private void Fire() {
@@ -29,15 +32,29 @@ public class Gun : MonoBehaviour {
             GameObject instance = Instantiate(projectilePrefab, transform.position, Quaternion.identity);
             Rigidbody2D rb = instance.GetComponent<Rigidbody2D>();
             if (rb != null) {
-                Vector2 direction = getMousePosition() - transform.position;
+                Vector2 direction = GetMousePosition() - transform.position;
                 rb.velocity = direction.normalized * projectileSpeed;
+                var angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+
+                instance.transform.rotation = Quaternion.Euler(0, 0, angle - 90);
             }
             Destroy(instance, projectileLifetime);
             yield return new WaitForSeconds(firingRate);
         }
     }
 
-    private Vector3 getMousePosition() {
+    private Vector3 GetMousePosition() {
         return Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue());
+    }
+
+    private void RotatePlayer() {
+        var screenPoint = GetMousePosition();
+        var offset = new Vector2(
+            screenPoint.x - transform.position.x,
+            screenPoint.y - transform.position.y
+        );
+        var angle = Mathf.Atan2(offset.y, offset.x) * Mathf.Rad2Deg;
+
+        transform.rotation = Quaternion.Euler(0, 0, angle);
     }
 }
