@@ -7,4 +7,13 @@ public class Inventory : MonoBehaviour {
         scrapCollected++;
         Debug.Log(scrapCollected);
     }
+
+    public int GetScrap() {
+        return scrapCollected;
+    }
+
+    public void UseScrap(int value) {
+        scrapCollected -= value;
+        Debug.Log(scrapCollected);
+    }
 }
