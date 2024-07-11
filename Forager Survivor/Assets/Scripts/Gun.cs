@@ -4,17 +4,31 @@ using UnityEngine.InputSystem;
 
 // TODO: Can bypass the firingRate by clicking rapidly, will need to fix
 public class Gun : MonoBehaviour {
-    [SerializeField] GameObject projectilePrefab;
+    [SerializeField] Projectile projectilePrefab;
     [SerializeField] float projectileSpeed = 10f;
     [SerializeField] float projectileLifetime = 5f;
     [SerializeField] float firingRate = 0.5f;
 
     public bool isFiring;
+
+    private int upgradeCount = 0;
+    private int bulletCount = 1;
+    private int damageValue = 1;
     private Coroutine firingCoroutine;
 
     private void Update() {
         Fire();
         RotatePlayer();
+    }
+    
+    public void UpgradeGun() {
+        if (upgradeCount % 3 == 0) {
+            firingRate /= 2f;
+        } else if (upgradeCount % 3 == 1) {
+            bulletCount++;
+        } else if (upgradeCount % 3 == 2) {
+            damageValue++;
+        }
     }
 
     private void Fire() {
@@ -28,7 +42,8 @@ public class Gun : MonoBehaviour {
 
     private IEnumerator FireContiniously() {
         while(true) {
-            GameObject instance = Instantiate(projectilePrefab, transform.position, Quaternion.identity);
+            Projectile instance = Instantiate(projectilePrefab, transform.position, Quaternion.identity);
+            instance.SetDamage(damageValue);
             Rigidbody2D rb = instance.GetComponent<Rigidbody2D>();
             if (rb != null) {
                 Vector2 direction = GetMousePosition() - transform.position;
