@@ -22,13 +22,18 @@ public class Gun : MonoBehaviour {
     }
     
     public void UpgradeGun() {
-        if (upgradeCount % 3 == 0) {
+        if (upgradeCount % 2 == 0) {
             firingRate /= 2f;
-        } else if (upgradeCount % 3 == 1) {
+            Debug.Log("Faster Fire Rate");
+        } /*else if (upgradeCount % 3 == 1) {
+            // Doesn't do anything currently
             bulletCount++;
-        } else if (upgradeCount % 3 == 2) {
+            Debug.Log("More bullets");
+        }*/ else if (upgradeCount % 2 == 1) {
             damageValue++;
+            Debug.Log("More Damage");
         }
+        upgradeCount++;
     }
 
     private void Fire() {

@@ -1,13 +1,16 @@
+using TMPro;
 using UnityEngine;
 
 // TODO Turn this into an Enum and Library/Map
 public class Inventory : MonoBehaviour {
+    [SerializeField] TextMeshProUGUI debugText;
+
     private int scrapCollected;
     private int upgradePartsCollected;
 
     public void AddScrap() {
         scrapCollected++;
-        Debug.Log("Scrap: " + scrapCollected);
+        UpdateText();
     }
 
     public int GetScrap() {
@@ -16,12 +19,12 @@ public class Inventory : MonoBehaviour {
 
     public void UseScrap(int value) {
         scrapCollected -= value;
-        Debug.Log("Scrap: " + scrapCollected);
+        UpdateText();
     }
 
     public void AddUpgradePart() {
         upgradePartsCollected++;
-        Debug.Log("Upgrade Parts: " + upgradePartsCollected);
+        UpdateText();
     }
 
     public int GetUpgradeParts() {
@@ -30,6 +33,10 @@ public class Inventory : MonoBehaviour {
 
     public void UseUpgradeParts(int value) {
         upgradePartsCollected -= value;
-        Debug.Log("Upgrade Parts: " + upgradePartsCollected);
+        UpdateText();
+    }
+
+    private void UpdateText() {
+        debugText.text = "Scrap: " + scrapCollected + "\nUpgrade Parts: " + upgradePartsCollected;
     }
 }

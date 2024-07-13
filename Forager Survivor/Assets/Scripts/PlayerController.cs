@@ -5,22 +5,33 @@ public class PlayerController : MonoBehaviour {
     private Movement movement;
     private Gun gun;
     private Builder builder;
+    private UpgradeBuilder upgradeBuilder;
     private Inventory inventory;
 
     private bool inBuildingContext;
     private Building building;
 
+    private int numberOfUpgradePartsNeeded = 1;
+
     private void Start() {
         movement = GetComponent<Movement>();
         gun = GetComponent<Gun>();
         builder = GetComponent<Builder>();
+        upgradeBuilder = GetComponent<UpgradeBuilder>();
         inventory = GetComponent<Inventory>();
     }
 
     private void OnFire(InputValue value) {
         if (inBuildingContext) {
-            building.StartBuilding(inventory.GetScrap());
-            inventory.UseScrap(inventory.GetScrap());
+            if (building.GetType() == typeof(UpgradeBuilding)) {
+                if (inventory.GetUpgradeParts() >= numberOfUpgradePartsNeeded) {
+                    building.StartBuilding(1);
+                    inventory.UseUpgradeParts(numberOfUpgradePartsNeeded);
+                }
+            } else {
+                building.StartBuilding(inventory.GetScrap());
+                inventory.UseScrap(inventory.GetScrap());
+            }
         } else {
             gun.isFiring = value.isPressed;
         }
@@ -33,6 +44,12 @@ public class PlayerController : MonoBehaviour {
     private void OnBuild(InputValue value) {
         if (value.isPressed) {
             builder.StartBuilding();
+        }
+    }
+
+    private void OnBuild2(InputValue value) {
+        if (value.isPressed) {
+            upgradeBuilder.StartBuilding();
         }
     }
 
