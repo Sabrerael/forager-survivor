@@ -1,7 +1,9 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour {
+
     private Movement movement;
     private Gun gun;
     private Builder builder;
@@ -10,8 +12,10 @@ public class PlayerController : MonoBehaviour {
 
     private bool inBuildingContext;
     private Building building;
-
+    // TODO This will need to be removed/moved
     private int numberOfUpgradePartsNeeded = 1;
+    private int score = 0;
+    [SerializeField] TextMeshProUGUI scoreText;
 
     private void Start() {
         movement = GetComponent<Movement>();
@@ -51,6 +55,11 @@ public class PlayerController : MonoBehaviour {
         if (value.isPressed) {
             upgradeBuilder.StartBuilding();
         }
+    }
+
+    public void IncreaseScore(int score) {
+        this.score += score;
+        scoreText.text = "Score: " + this.score;
     }
 
     public void SetBuildingContext(Building building) {

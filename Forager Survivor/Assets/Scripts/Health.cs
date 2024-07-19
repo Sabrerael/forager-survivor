@@ -24,10 +24,10 @@ public class Health : MonoBehaviour {
     }
 
     private void Die() {
-        Debug.Log("Die");
         Destroy(gameObject);
         if (gameObject.CompareTag("Enemy")) {
             GetComponent<Enemy>().SpawnScrap();
+            FindObjectOfType<PlayerController>().IncreaseScore(100);
         }
     }
 }

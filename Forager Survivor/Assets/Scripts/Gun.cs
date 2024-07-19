@@ -8,6 +8,7 @@ public class Gun : MonoBehaviour {
     [SerializeField] float projectileSpeed = 10f;
     [SerializeField] float projectileLifetime = 5f;
     [SerializeField] float firingRate = 0.5f;
+    [SerializeField] float[] firingAngles = {0, 1, -1, 2, -2};
 
     public bool isFiring;
 
@@ -22,14 +23,13 @@ public class Gun : MonoBehaviour {
     }
     
     public void UpgradeGun() {
-        if (upgradeCount % 2 == 0) {
+        if (upgradeCount % 3 == 0) {
             firingRate /= 2f;
             Debug.Log("Faster Fire Rate");
-        } /*else if (upgradeCount % 3 == 1) {
-            // Doesn't do anything currently
+        } else if (upgradeCount % 3 == 1) {
             bulletCount++;
             Debug.Log("More bullets");
-        }*/ else if (upgradeCount % 2 == 1) {
+        } else if (upgradeCount % 3 == 2) {
             damageValue++;
             Debug.Log("More Damage");
         }
@@ -47,17 +47,19 @@ public class Gun : MonoBehaviour {
 
     private IEnumerator FireContiniously() {
         while(true) {
-            Projectile instance = Instantiate(projectilePrefab, transform.position, Quaternion.identity);
-            instance.SetDamage(damageValue);
-            Rigidbody2D rb = instance.GetComponent<Rigidbody2D>();
-            if (rb != null) {
-                Vector2 direction = GetMousePosition() - transform.position;
-                rb.velocity = direction.normalized * projectileSpeed;
-                var angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+            for (int i = 0; i < bulletCount; i++) {
+                Projectile instance = Instantiate(projectilePrefab, transform.position, Quaternion.identity);
+                instance.SetDamage(damageValue);
+                Rigidbody2D rb = instance.GetComponent<Rigidbody2D>();
+                if (rb != null) {
+                    Vector2 direction = GetMousePosition() - transform.position;
+                    rb.velocity = direction.normalized * projectileSpeed;
+                    var angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
 
-                instance.transform.rotation = Quaternion.Euler(0, 0, angle - 90);
+                    instance.transform.rotation = Quaternion.Euler(0, 0, angle - 90 + firingAngles[i]);
+                }
+                Destroy(instance, projectileLifetime);
             }
-            Destroy(instance, projectileLifetime);
             yield return new WaitForSeconds(firingRate);
         }
     }
