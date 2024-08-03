@@ -4,18 +4,27 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour {
     [SerializeField] GameObject scrapPrefab;
+    [SerializeField] float movementSpeed = 2;
 
-    GameObject player;
+    private GameObject player;
 
-    void Start() {
+    private void Start() {
         player = GameObject.Find("Player");
     }
 
-    // Update is called once per frame
-    void Update() {
-        var direction = (player.transform.position - transform.position).normalized;
-        transform.position += direction * Time.deltaTime;
-        RotateTowardsPlayer();
+    private void Update() {
+        if (player != null) {
+            var direction = (player.transform.position - transform.position).normalized;
+            transform.position += direction * (movementSpeed * Time.deltaTime);
+            RotateTowardsPlayer();
+        }
+    }
+
+    private void OnCollisionEnter2D(Collision2D other) {
+        if (other.gameObject == player) {
+            Health playerHealth = player.GetComponent<Health>();
+            playerHealth.TakeDamage(1);
+        }
     }
 
     public void SpawnScrap() {

@@ -12,6 +12,7 @@ public class PlayerController : MonoBehaviour {
 
     private bool inBuildingContext;
     private Building building;
+    private BuildingBuilder buildingBuilder;
     // TODO This will need to be removed/moved
     private int numberOfUpgradePartsNeeded = 1;
     private int score = 0;
@@ -65,6 +66,9 @@ public class PlayerController : MonoBehaviour {
     public void SetBuildingContext(Building building) {
         inBuildingContext = true;
         this.building = building;
+        if (building is BuildingBuilder) {
+            
+        }
     }
 
     public void UnsetBuildingContext() {

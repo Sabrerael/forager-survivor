@@ -177,6 +177,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scrapPrefab: {fileID: 2661938656484766159, guid: 236256a493760de44b4e628bd8f6e614, type: 3}
+  movementSpeed: 1.75
 --- !u!114 &7571943500070076829
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -190,3 +191,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   healthPoints: 1
+  healthText: {fileID: 0}
